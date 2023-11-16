@@ -1,14 +1,14 @@
 /*
-I am not sure if this is counts as an animation. but I am handing it in as one anyway :)
+I am not sure if this is counts as an animation. But I am handing it in as one anyway :)
  I was inspired by this video: https://www.youtube.com/watch?v=Cp5WWtMoeKg
  I also got usefull information out of these:
  https://www.youtube.com/watch?v=TOEi6T2mtHo&t=48s
  https://www.youtube.com/watch?v=S8AWd66hoCo
- I will continue to work on this
+ I will continue to work on this!
  for example implementing more primatives and control over positions
- I was told not to start my scentences with I.
- Also the logic is not sound, everything is spagetti
- and I can improve a lot in terms of readability. but for the moment it is ok. I guess
+ I was told in school, not to start my scentences with I.
+ Also, the logic is not sound at all aas of yet, everything is spagetti
+ and I can improve a lot in terms of readability. But for the moment it is ok. I guess
  */
 
 PVector p;// position of intrest
@@ -33,6 +33,7 @@ void setup()
   colorMode(HSB, 360, 100, 100);
   noFill();
   stroke(255);
+  p= new PVector(0,0);
 }
 float rotation=-1;
 void draw()
@@ -41,9 +42,9 @@ void draw()
   {
     background(255);
     drawCircles();
-
-    p = new PVector(mouseX, mouseY);
-
+    PVector velocity = new PVector(random(0,1),random(0,1) );
+    p.add(velocity);
+    p = new PVector(mouseX,mouseY);
     stroke(255, 200, 200);
     showStuff(p);
 
