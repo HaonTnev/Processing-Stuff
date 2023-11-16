@@ -1,5 +1,5 @@
 /*
-I am not sure if this is counts as an animation. But I am handing it in as one anyway :)
+ I am not sure if this is counts as an animation. But I am handing it in as one anyway :)
  I was inspired by this video: https://www.youtube.com/watch?v=Cp5WWtMoeKg
  I also got usefull information out of these:
  https://www.youtube.com/watch?v=TOEi6T2mtHo&t=48s
@@ -12,14 +12,15 @@ I am not sure if this is counts as an animation. But I am handing it in as one a
  */
 
 PVector p;// position of intrest
-PVector rd = new PVector(1, 0);// Ray direction
+PVector rd = new PVector(1, 1);// Ray direction
 
 Circle c = new Circle();// Primitive circle with integrated sdf
-int circlesAmount = 15;
+int circlesAmount = 8;
 Circle [] circles= new Circle[circlesAmount];
 
 float maxDst = 500;
-float minDst= 0.01;
+float minDst= 0.1;
+int maxNumSteps = 50;
 boolean pause= false;
 
 Raymarch rm = new Raymarch();
@@ -33,7 +34,7 @@ void setup()
   colorMode(HSB, 360, 100, 100);
   noFill();
   stroke(255);
-  p= new PVector(0,0);
+  p= new PVector(0, 0);
 }
 float rotation=-1;
 void draw()
@@ -42,38 +43,73 @@ void draw()
   {
     background(255);
     drawCircles();
-    PVector velocity = new PVector(random(0,1),random(0,1) );
-    p.add(velocity);
-    p = new PVector(mouseX,mouseY);
+    
     stroke(255, 200, 200);
-    showStuff(p);
-
-    for (int numSteps=0; numSteps<100; numSteps++)
-    {
-
-      rd= new PVector(rd.x+sdfToScene(p), rd.y);
-      line(p.x, p.y, p.x+rd.x, p.y+rd.y);
-      showStuff(p.add(rd));
-      PVector nextStep = p.add(rd);
-      if (sdfToScene(p)<= minDst)
-      {
-        numSteps=100;
-      }
-    }
-
-    // get new point on the radius of the circle and repeat sdf there
-    // draw new circle at the mentioned location if x > minDst
-    // continue like that with the same directional vector until x<minDst
-    // which would mean a hit occured.
+    p = new PVector(mouseX, mouseY);
+    
+    showStep(p);
+    rd= new PVector(rd.x+sdfToScene(p), rd.y);
+    marchOnRay(p, rd);      
+    smallRedDot(p);
   }
+  saveFrame("output/image####.png");
+
 }
-void showStuff(PVector pos)
+void smallRedDot(PVector p)
 {
-  pushStyle();
-  ellipse(pos.x, pos.y, 2, 2);// show center of circle
-  ellipse(pos.x, pos.y, sdfToScene(pos), sdfToScene(pos));// show radius of ircle
+  pushStyle(); 
+  fill(#F51616);
+  ellipse (p.x, p.y, 5, 5);
   popStyle();
 }
+void marchOnRay(PVector p, PVector direction)
+{
+  // get new point on the radius of the circle and repeat sdf there
+  PVector nextStep = p ;
+  int stepsTaken= 0;
+  // nextStep.add(direction);
+  // draw new circle at the mentioned location if x > minDst
+  // continue like that with the same directional vector until x<minDst
+  // which would mean a hit occured.
+  for (int numSteps=0; numSteps<maxNumSteps; numSteps++)
+  {
+
+    line(p.x, p.y, p.x+direction.x, p.y+direction.y);
+    nextStep=new PVector(nextStep.x+sdfToScene(nextStep), nextStep.y);
+    showStep(nextStep);
+    stepsTaken ++;
+    if (sdfToScene(nextStep)<= minDst&&sdfToScene(nextStep)>0)
+    {
+      println(nextStep +" "+ stepsTaken);
+      pushStyle();
+      fill(#20F516);
+      ellipse(nextStep.x, nextStep.y, 5, 5);
+      popStyle();
+      numSteps=maxNumSteps;
+    }
+  }
+}
+void showStep(PVector p)
+{
+  pushStyle();
+  ellipse(p.x, p.y, 2, 2);// show center of circle
+  ellipse(p.x, p.y, sdfToScene(p), sdfToScene(p));// show radius of ircle
+  popStyle();
+}
+
+float sdfToScene(PVector p)
+{
+  float dstToScene = maxDst;
+  for (int i= 0; i<circlesAmount; i ++)
+  {
+    float dstToCircle = circles[i].sdfCircle(p);
+    dstToScene= min(dstToCircle, dstToScene);
+    circles[i].col = color(dstToCircle, 0, 0);
+  }
+  return dstToScene;
+}
+
+
 void mouseClicked()
 {
   if (pause==false)
@@ -81,6 +117,8 @@ void mouseClicked()
     pause=true;
   } else pause=false;
 }
+
+
 
 void drawCircles()//Always draw circles at the same location
 {
@@ -99,16 +137,4 @@ void createCircles()// Initialize circles and set theit values to be used later 
     c.radius = random(70, 150);
     circles[i]= c;
   }
-}
-float sdfToScene(PVector p)
-{
-  float dstToScene = maxDst;
-  for (int i= 0; i<circlesAmount; i ++)
-  {
-    float dstToCircle = circles[i].sdfCircle(p);
-    dstToScene= min(dstToCircle, dstToScene);
-    circles[i].col = color(dstToCircle, 0, 0);
-  }
-  println(dstToScene);
-  return dstToScene;
 }
