@@ -52,7 +52,7 @@ void draw()
     marchOnRay(p, rd);      
     smallRedDot(p);
   }
-  saveFrame("output/image####.png");
+ // saveFrame("output/image####.png");
 
 }
 void smallRedDot(PVector p)
