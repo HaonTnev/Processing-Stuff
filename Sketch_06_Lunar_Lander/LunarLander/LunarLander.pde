@@ -17,6 +17,10 @@ boolean howToPlay= false;
 boolean game = false;
 boolean gameOver = false;
 
+// Get bools to store if game was won or lost
+boolean win= false;
+boolean lose= false;
+
 // Get references to classes
 MainMenu menu = new MainMenu();
 Controlls controllScreen = new Controlls();
@@ -33,6 +37,8 @@ void draw()
 
   Game.show();
   Game.submarine();
+  //println(Game.pos);
+  Game.checkLandingSpot();
 
   GameOver.show();
 }
@@ -48,6 +54,16 @@ void mouseClicked()
       howToPlay = true;
     }
   }
+
+  if (gameOver) {
+    if (GameOver.mouseOverRestartBTN()) {
+      win= false;
+      lose= false;
+      Game.pos = new PVector(width/2, 100);
+      gameOver=false;
+      game=true;
+    }
+  }
 }
 
 
@@ -61,7 +77,7 @@ void keyPressed()
     game = false;
     gameOver= true;
   }
-    if (game && key == 32) { // Make sure this is only done at he right time
+  if (game && key == 32) { // Make sure this is only done at he right time
     Game.accelerate();
   }
 }
