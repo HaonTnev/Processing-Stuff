@@ -7,6 +7,7 @@
 void setup()
 {
   size(1024, 1024);
+  frameRate(60);
 }
 
 // I will manage the transition of the diffrent screens via the following booleans.
@@ -22,6 +23,7 @@ Controlls controllScreen = new Controlls();
 Game Game = new Game();
 GameOver GameOver = new GameOver();
 
+
 void draw()
 {
   menu.show();
@@ -30,6 +32,7 @@ void draw()
   controllScreen.show();
 
   Game.show();
+  Game.submarine();
 
   GameOver.show();
 }
@@ -57,5 +60,8 @@ void keyPressed()
   if (game && key == 8) { // Make sure this is only done at he right time
     game = false;
     gameOver= true;
+  }
+    if (game && key == 32) { // Make sure this is only done at he right time
+    Game.accelerate();
   }
 }
