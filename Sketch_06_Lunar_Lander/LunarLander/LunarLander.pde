@@ -8,6 +8,7 @@ void setup()
 {
   size(1024, 1024);
   frameRate(60);
+  o2Meter.o2= 200;
 }
 
 // I will manage the transition of the diffrent screens via the following booleans.
@@ -26,6 +27,7 @@ MainMenu menu = new MainMenu();
 Controlls controllScreen = new Controlls();
 Game Game = new Game();
 GameOver GameOver = new GameOver();
+OxygenMeter o2Meter = new OxygenMeter();
 
 
 void draw()
@@ -38,8 +40,9 @@ void draw()
   Game.show();
   Game.submarine();
   //println(Game.pos);
+  o2Meter.show();
   Game.checkLandingSpot();
-
+  o2Meter.time();
   GameOver.show();
 }
 

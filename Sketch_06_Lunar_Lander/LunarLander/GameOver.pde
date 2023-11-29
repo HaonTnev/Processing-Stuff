@@ -20,9 +20,11 @@ class GameOver
   void restartBTN() // Creates the button to restart the game without going through main menu
   {
     push();
+    if(mouseOverRestartBTN()){
+    fill(#3197C4); }
     stroke(#347D9D);
     strokeWeight(5);
-    fill(#3197C4);
+   
     rect(width/3, height/2, 180, 75, 28);
     fill(0);
     text("RESTART", width/3+35, height/2+50);
