@@ -1,6 +1,6 @@
 class Game
 {
-  PVector pos = new PVector(width/2, 100);
+  PVector pos;
   float speed = 10;
 
   void show()
@@ -36,7 +36,13 @@ class Game
       pop();
     }
   }
+void sink()
+{   
+if(game){
+    pos = new PVector(pos.x, pos.y+0.8);
+}
 
+}
   void accelerate()
   {
     PVector unitVector;

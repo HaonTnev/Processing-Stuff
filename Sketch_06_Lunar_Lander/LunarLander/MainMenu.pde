@@ -32,3 +32,6 @@ class MainMenu
     pop();
   }
 }
+void smth (){
+
+}
