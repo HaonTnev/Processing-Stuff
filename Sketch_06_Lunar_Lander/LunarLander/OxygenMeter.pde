@@ -6,7 +6,7 @@ class OxygenMeter
   {
     if (game) {
       if (o2()>0)
-      {
+      { 
 
 
         push();

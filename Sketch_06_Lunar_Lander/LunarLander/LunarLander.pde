@@ -7,7 +7,8 @@
 void setup()
 {
   size(1024, 1024);
-  frameRate(100);
+  frameRate(60);
+  textAlign(CENTER);
   Game.pos = new PVector(width/2, 100);
 }
 
@@ -38,7 +39,8 @@ void draw()
   controllScreen.show();
 
   Game.show();
-  Game.sink();
+  Game.showObstacle(new PVector (300, 300));
+  Game.updatePos();
   Game.submarine();
   //println(Game.pos);
   o2Meter.show();
@@ -94,6 +96,6 @@ void keyPressed()
     gameOver= true;
   }
   if (game && key == 32) { // Make sure this is only done at he right time
-    Game.accelerate();
+  //  Game.accelerate();
   }
 }

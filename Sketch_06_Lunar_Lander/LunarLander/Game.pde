@@ -1,7 +1,7 @@
 class Game
 {
   PVector pos;
-  float speed = 10;
+  float speed = 5;
 
   void show()
   {
@@ -36,18 +36,23 @@ class Game
       pop();
     }
   }
-void sink()
-{   
-if(game){
-    pos = new PVector(pos.x, pos.y+0.8);
-}
-
-}
+  void updatePos()
+  {
+    if (game) {
+      if (keyPressed)
+      {
+        if (key==32) {
+          accelerate();
+        } else return;
+      }
+      pos = new PVector(pos.x, pos.y+0.8);
+    }
+  }
   void accelerate()
   {
     PVector unitVector;
     unitVector = PVector.fromAngle(rotation());
-    pos = new PVector(pos.x+unitVector.x*speed, pos.y+unitVector.y*speed);
+    pos = new PVector(pos.x+unitVector.x*speed, pos.y+unitVector.y*speed+0.8);
   }
   void landingSpot()
   {
@@ -59,10 +64,10 @@ if(game){
 
   void checkLandingSpot() {
     if (landed()) {
-     // println("win");
-     win = true;
-     game= false;
-     gameOver = true;
+      // println("win");
+      win = true;
+      game= false;
+      gameOver = true;
     }
   }
   boolean landed()
@@ -71,6 +76,9 @@ if(game){
       return true;
     } else return false;
   }
-  
+}
+void showObstacle(PVector pos)
+{
+
 
 }

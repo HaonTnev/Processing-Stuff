@@ -6,10 +6,10 @@ class MainMenu
     background(#4BB2E0);
     push();
     fill(0);
-    textSize(50);
-    text("Finding Atlantis", width/3, 300);
-    textSize(30);
-    text("by Noah Wendt", width/3, 350);
+    textSize(80);
+    text("FINDING ATLANTIS", width/2, 200);
+    textSize(25);
+    text("by Noah Wendt", width/3, 250);
     pop();
   }
 
@@ -31,7 +31,4 @@ class MainMenu
     text("START", width/3+50, height/2+50);
     pop();
   }
-}
-void smth (){
-
 }
