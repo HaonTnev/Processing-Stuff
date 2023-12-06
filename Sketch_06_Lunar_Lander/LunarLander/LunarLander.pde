@@ -10,11 +10,14 @@ void setup()
   frameRate(60);
   textAlign(CENTER);
   Game.pos = new PVector(width/2, 100);
+  PFont.list();
+  font = createFont("FartBubble", 32);
+  textFont(font);
 }
 
 // I will manage the transition of the diffrent screens via the following booleans.
 // Whichever of these is true at any given moment will represent the currently active screen.
-boolean mainMenu= true; // Default screen when programm is started
+boolean mainMenu= true; // Default screen when programm is started®
 boolean howToPlay= false;
 boolean game = false;
 boolean gameOver = false;
@@ -31,10 +34,12 @@ GameOver GameOver = new GameOver();
 OxygenMeter o2Meter = new OxygenMeter();
 
 float millisSinceStart;
+
+PFont font;
 void draw()
 {
   menu.show();
-  menu.startBTN();
+
 
   controllScreen.show();
 
@@ -53,11 +58,20 @@ void draw()
 void mouseClicked()
 {
   if (mainMenu) { // Do this only when the Main Menu is active. Should prevent leeking of logic into other screens
-    if (menu.mouseOverBTN()) {
+    if (menu.mouseOverPlayBTN()) {
+      // Transition from main menu to the how to play screen
+      println("btn pressed");
+      mainMenu = false;
+      game = true;
+    }
+    if (menu.mouseOverControllsBTN()) {
       // Transition from main menu to the how to play screen
       println("btn pressed");
       mainMenu = false;
       howToPlay = true;
+    }
+    if (menu.mouseOverQuitBTN()) {
+      exit();
     }
   }
 
@@ -71,14 +85,14 @@ void mouseClicked()
       millisSinceStart=millis()/1000;
     }
     if (GameOver.mouseOverMenuBTN()) {
-            win= false;
+      win= false;
       lose= false;
       Game.pos = new PVector(width/2, 100);
       gameOver=false;
       mainMenu=true;
     }
-    if(GameOver.mouseOverQuitBTN()){
-    exit();
+    if (GameOver.mouseOverQuitBTN()) {
+      exit();
     }
   }
 }
@@ -96,6 +110,6 @@ void keyPressed()
     gameOver= true;
   }
   if (game && key == 32) { // Make sure this is only done at he right time
-  //  Game.accelerate();
+    //  Game.accelerate();
   }
 }

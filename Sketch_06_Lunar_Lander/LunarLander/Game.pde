@@ -1,7 +1,7 @@
 class Game
 {
   PVector pos;
-  float speed = 5;
+  float speed = 2;
 
   void show()
   {
@@ -76,9 +76,12 @@ class Game
       return true;
     } else return false;
   }
-}
-void showObstacle(PVector pos)
-{
 
 
+  void showObstacle(PVector pos)
+  {
+    if (game) {
+      rect(pos.x, pos.y, 50, 50);
+    }
+  }
 }
