@@ -19,6 +19,7 @@ class OxygenMeter
   }
   float o2()
   {
-    return o2Value+millisSinceStart-(DeltaTime*5);
+    o2Value-=DeltaTime*5;
+    return o2Value;
   }
 }

@@ -6,11 +6,11 @@ class Bubble
 
   void setPos()
   {
-    pos = new PVector(random(200, width), random(200, height-200));
+    pos = new PVector(random(0, width), random(700, height));
   }
   void setSpeedY()
   {
-    speedY= random(.5, 1.5);
+    speedY= random(.2, 1);
   }
   void updatePos()
   {
@@ -30,7 +30,7 @@ class Bubble
   }
   void hit()
   {
-    if (dist(Game.pos.x, pos.y, pos.x, pos.y)<25&&!popped) {
+    if (dist(Game.pos.x, Game.pos.y, pos.x, pos.y)<25&&!popped) {
       o2Meter.o2Value+=10;
       popped=true;
     }

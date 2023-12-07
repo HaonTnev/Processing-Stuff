@@ -12,9 +12,23 @@ void setup()
   frameRate(60);
   textSize(20);
   textAlign(CENTER);
+
   Game.pos = new PVector(100, 100);
   font = createFont("FartBubble", 32); // Got the font @ https://www.fontspace.com/category/underwater
   textFont(font);
+  
+Game.sprite= loadImage("submarine.png");
+  
+  for (int i = 0; i < obstacles.length; i++)
+  {
+    obstacles[i] = new Obstacle();
+    obstacles[i].sprite= loadImage("pirania.png");
+    obstacles[i].sprite2= loadImage("pirania_left.png"); // got th image @ https://www.cleanpng.com/png-red-bellied-piranha-redeye-piranha-4298279/download-png.html
+  }
+  for (int i = 0; i < bubbles.length; i++)
+  {
+    bubbles[i] = new Bubble();
+  }
   initializeFloatingStuff();
 }
 void initializeFloatingStuff() {
@@ -48,51 +62,11 @@ GameOver GameOver = new GameOver();
 OxygenMeter o2Meter = new OxygenMeter();
 
 
-//Obstacle obstacle = new Obstacle();
-Obstacle[] obstacles= {
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-  new Obstacle(),
-};
+// obstacle = new Obstacle();
+Obstacle[] obstacles = new Obstacle[80];
 
-Bubble[] bubbles= {
-  new Bubble(),
-  new Bubble(),
-  new Bubble(),
-  new Bubble(),
-  new Bubble(),
-  new Bubble(),
-  new Bubble(),
-  new Bubble(),
-  new Bubble(),
-  new Bubble(),
-};
+Bubble[] bubbles = new Bubble[25];
+
 
 float millisSinceStart;
 
@@ -123,7 +97,7 @@ void draw()
   //println(Game.pos);
   o2Meter.show();
   Game.checkLandingSpot();
-  o2Meter.time();
+  //o2Meter.time();
   if (o2Meter.o2()<=0) {
     lose=true;
     game=false;
@@ -158,7 +132,6 @@ void mouseClicked()
   if (gameOver) {
     if (GameOver.mouseOverRestartBTN()) { // reset evevything
       initializeFloatingStuff();
-      millisSinceStart=millis()/1000;
       o2Meter.o2Value = 200;
       println(o2Meter.o2());
       win= false;
@@ -188,9 +161,16 @@ void mouseClicked()
 void keyPressed()
 {
   if (howToPlay && key == 32) { // Make sure this is only done at he right time
+
+    initializeFloatingStuff();
+    o2Meter.o2Value = 200;
+    println(o2Meter.o2());
+    win= false;
+    lose= false;
+    Game.pos = new PVector(100, 100);
+    gameOver=false;
     howToPlay = false;
     game = true;
-    millisSinceStart=millis()/1000;
   }
   if (game && key == 8) { // Make sure this is only done at he right time
     game = false;

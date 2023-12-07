@@ -30,7 +30,7 @@ class MainMenu
     fill(0);
     textSize(25);
     textAlign(CENTER);
-    text("CONTROLLS", 90, 50);
+    text("CONTROLS", 90, 50);
     
     pop();
   }

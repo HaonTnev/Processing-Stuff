@@ -2,7 +2,8 @@ class Game
 {
   PVector pos;
   float radius = 30;
-  float speed = 2;
+  float speed = 4;
+  PImage sprite;
 
   void show()
   {
@@ -30,10 +31,13 @@ class Game
   {
     if (game) {
       push();
+      imageMode(CENTER);
       translate(pos.x, pos.y);
       rotate(rotation());
       fill(0);
-      ellipse(0, 0, 40, 30);
+      sprite.resize(1592/17,916/17);
+      image(sprite, 0, 0);
+     // ellipse(0, 0, 40, 30);
       pop();
     }
   }
