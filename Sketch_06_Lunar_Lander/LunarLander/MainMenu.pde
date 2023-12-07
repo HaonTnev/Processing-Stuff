@@ -28,8 +28,10 @@ class MainMenu
     strokeWeight(5);
     rect(0, 0, 180, 75, 28);
     fill(0);
+    textSize(25);
     textAlign(CENTER);
     text("CONTROLLS", 90, 50);
+    
     pop();
   }
   boolean mouseOverControllsBTN()

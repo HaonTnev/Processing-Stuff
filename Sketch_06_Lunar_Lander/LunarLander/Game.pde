@@ -1,13 +1,14 @@
 class Game
 {
   PVector pos;
+  float radius = 30;
   float speed = 2;
 
   void show()
   {
     if (game) {
       push();
-      background(255);
+      background(#4BB2E0);
       fill(0);
       //textSize(50);
       //text("Game Screen", width/3, 300);
@@ -57,8 +58,9 @@ class Game
   void landingSpot()
   {
     push();
+    translate(width-350, height-100);
     fill(0, 355, 0);
-    rect(width/2, height/2, 40, 40);
+    rect(0,0, 120, 60);
     pop();
   }
 
@@ -72,16 +74,8 @@ class Game
   }
   boolean landed()
   {
-    if (pos.x<width/2+40&&pos.x>width/2&&pos.y<height/2+40&&pos.y>height/2) {
+    if (pos.x<width-350+120 && pos.x>width-350 && pos.y<height-40 && pos.y>height-100) {
       return true;
     } else return false;
-  }
-
-
-  void showObstacle(PVector pos)
-  {
-    if (game) {
-      rect(pos.x, pos.y, 50, 50);
-    }
   }
 }

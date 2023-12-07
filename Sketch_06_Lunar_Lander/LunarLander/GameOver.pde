@@ -14,6 +14,14 @@ class GameOver
         textSize(30);
         text("You won Yay. Good job!", width/2, 250);
       }
+      if (lose) {
+        fill(0);
+        textAlign(CENTER);
+        textSize(70);
+        text("Game Over", width/2, 200);
+        textSize(30);
+        text("You lost...'inset smth funny'", width/2, 250);
+      }
       pop();
       restartBTN();
       menuBTN();

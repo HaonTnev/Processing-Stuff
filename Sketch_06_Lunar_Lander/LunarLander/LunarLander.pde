@@ -1,20 +1,34 @@
-/* # Lunar LAnder Assignment
+/* # Lunar Lander Assignment
  
  Going ahead with the 'Atlantis Idea'
  
  */
+float DeltaTime;
+float lastTimeStep;
 
 void setup()
 {
-  size(1024, 1024);
+  fullScreen();
   frameRate(60);
+  textSize(20);
   textAlign(CENTER);
-  Game.pos = new PVector(width/2, 100);
-  PFont.list();
-  font = createFont("FartBubble", 32);
+  Game.pos = new PVector(100, 100);
+  font = createFont("FartBubble", 32); // Got the font @ https://www.fontspace.com/category/underwater
   textFont(font);
+  initializeFloatingStuff();
 }
-
+void initializeFloatingStuff() {
+  for (Obstacle obstacle : obstacles) {
+    obstacle.setPos();
+    obstacle.setSpeedX();
+    // println(obstacle, obstacle.pos, obstacle.speedX);
+  }
+  for (Bubble bubble : bubbles) {
+    bubble. setPos();
+    bubble.setSpeedY();
+    bubble.popped = false;
+  }
+}
 // I will manage the transition of the diffrent screens via the following booleans.
 // Whichever of these is true at any given moment will represent the currently active screen.
 boolean mainMenu= true; // Default screen when programm is started®
@@ -33,24 +47,88 @@ Game Game = new Game();
 GameOver GameOver = new GameOver();
 OxygenMeter o2Meter = new OxygenMeter();
 
+
+//Obstacle obstacle = new Obstacle();
+Obstacle[] obstacles= {
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+  new Obstacle(),
+};
+
+Bubble[] bubbles= {
+  new Bubble(),
+  new Bubble(),
+  new Bubble(),
+  new Bubble(),
+  new Bubble(),
+  new Bubble(),
+  new Bubble(),
+  new Bubble(),
+  new Bubble(),
+  new Bubble(),
+};
+
 float millisSinceStart;
 
 PFont font;
 void draw()
 {
+  DeltaTime = (millis() - lastTimeStep)/1000.0;
+  lastTimeStep = millis();
   menu.show();
 
 
   controllScreen.show();
 
+
   Game.show();
-  Game.showObstacle(new PVector (300, 300));
+  for (Obstacle obstacle : obstacles) {
+    obstacle.updatePos();
+    obstacle.show();
+    obstacle.hit();
+  }
+  for (Bubble bubble : bubbles) {
+    bubble.updatePos();
+    bubble.show();
+    bubble.hit();
+  }
   Game.updatePos();
   Game.submarine();
   //println(Game.pos);
   o2Meter.show();
   Game.checkLandingSpot();
   o2Meter.time();
+  if (o2Meter.o2()<=0) {
+    lose=true;
+    game=false;
+    gameOver=true;
+  }
   GameOver.show();
 }
 
@@ -60,9 +138,11 @@ void mouseClicked()
   if (mainMenu) { // Do this only when the Main Menu is active. Should prevent leeking of logic into other screens
     if (menu.mouseOverPlayBTN()) {
       // Transition from main menu to the how to play screen
-      println("btn pressed");
+      // println("btn pressed");
+      initializeFloatingStuff();
       mainMenu = false;
       game = true;
+      millisSinceStart=millis()/1000;
     }
     if (menu.mouseOverControllsBTN()) {
       // Transition from main menu to the how to play screen
@@ -76,18 +156,25 @@ void mouseClicked()
   }
 
   if (gameOver) {
-    if (GameOver.mouseOverRestartBTN()) {
+    if (GameOver.mouseOverRestartBTN()) { // reset evevything
+      initializeFloatingStuff();
+      millisSinceStart=millis()/1000;
+      o2Meter.o2Value = 200;
+      println(o2Meter.o2());
       win= false;
       lose= false;
-      Game.pos = new PVector(width/2, 100);
+      Game.pos = new PVector(100, 100);
       gameOver=false;
       game=true;
-      millisSinceStart=millis()/1000;
     }
-    if (GameOver.mouseOverMenuBTN()) {
+    if (GameOver.mouseOverMenuBTN()) { // reset everything
+      initializeFloatingStuff();
+      millisSinceStart=millis()/1000;
+      o2Meter.o2Value = 200;
+      println(o2Meter.o2());
       win= false;
       lose= false;
-      Game.pos = new PVector(width/2, 100);
+      Game.pos = new PVector(100, 100);
       gameOver=false;
       mainMenu=true;
     }
@@ -108,8 +195,5 @@ void keyPressed()
   if (game && key == 8) { // Make sure this is only done at he right time
     game = false;
     gameOver= true;
-  }
-  if (game && key == 32) { // Make sure this is only done at he right time
-    //  Game.accelerate();
   }
 }

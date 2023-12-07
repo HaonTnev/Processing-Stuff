@@ -1,14 +1,12 @@
 class OxygenMeter
 {
-
+  float o2Value = 200;
 
   void show()
   {
     if (game) {
       if (o2()>0)
-      { 
-
-
+      {
         push();
         noFill();
         stroke(0);
@@ -21,11 +19,6 @@ class OxygenMeter
   }
   float o2()
   {
-    return 200+millisSinceStart-(time()*5);
-  }
-  float time()
-  {
-    // println(millis()/1000);
-    return millis()/1000;
+    return o2Value+millisSinceStart-(DeltaTime*5);
   }
 }

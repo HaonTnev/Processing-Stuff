@@ -6,14 +6,15 @@ class Controlls
       push();
       background(#4BB2E0);
       fill(0);
-      textSize(50);
-      text("Controls", width/3, 300);
+      textSize(60);
+      text("Controls", width/2, 250);
       textSize(30);
-      text("Use mouse to steer", width/3, 350);
-      text("Press Space to accelerate", width/3, 400);
-      text("Swim through air bubbles to fill up oxygen", width/3, 450);
-      text("Don't bump into rocks", width/3, 500);
-      text("Press Space continue", width/3, 550);
+      text("Use mouse to steer", width/2, 350);
+      text("Press Space to accelerate", width/2, 400);
+      text("Swim through air bubbles to fill up oxygen", width/2, 450);
+      text("Don't bump into rocks", width/2, 500);
+      textSize(25);
+      text("Press Space continue", width/2, 650);
       pop();
     }
   }
