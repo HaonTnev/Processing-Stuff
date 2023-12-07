@@ -12,7 +12,7 @@ class Controlls
       text("Use mouse to steer", width/2, 350);
       text("Press Space to accelerate", width/2, 400);
       text("Swim through air bubbles to fill up oxygen", width/2, 450);
-      text("Don't bump into rocks", width/2, 500);
+      text("Don't bump into piranias", width/2, 500);
       textSize(25);
       text("Press Space continue", width/2, 650);
       pop();
